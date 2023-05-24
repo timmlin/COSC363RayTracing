@@ -15,6 +15,7 @@
 #include "Ray.h"
 #include "Plane.h"
 #include <GL/freeglut.h>
+#include "Room.h"
 #include "TextureBMP.h"
 
 using namespace std;
@@ -173,14 +174,8 @@ void initialize()
     sceneObjects.push_back(sphere4);         //Add sphere to scene objects
     sphere4->setReflectivity(true, 0.3);
 
-    Plane *plane = new Plane (glm::vec3(-20., -15, -40), //Point A
-    glm::vec3(20., -15, -40), //Point B
-    glm::vec3(20., -15, -200), //Point C
-    glm::vec3(-20., -15, -200)); //Point D
-    plane->setColor(glm::vec3(0.8, 0.8, 0));
-    plane->setSpecularity(false);
 
-    sceneObjects.push_back(plane);
+    sceneObjects = intialiseRoom(sceneObjects);
 
 
 
