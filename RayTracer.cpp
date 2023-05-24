@@ -69,7 +69,9 @@ glm::vec3 trace(Ray ray, int step)
         color = color + (rho * reflectedColor);
     }
 
-    if (ray.index == 4)
+
+
+    if (ray.index == 4) //floor plane
     {
         //Stripe pattern
         int stripeWidth = 5;
@@ -153,23 +155,23 @@ void initialize()
 
     texture = TextureBMP("Butterfly.bmp");
 
-    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, 0.0, -90.0), 15.0);
+    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, 0.0, -270.0), 15.0);
     sphere1->setColor(glm::vec3(0, 0, 1));   //Set colour to blue
     sceneObjects.push_back(sphere1);         //Add sphere to scene objects
     sphere1->setShininess(5);
     sphere1->setReflectivity(true, 0.5);
     sphere1->setTransparency(true);
 
-    Sphere *sphere2 = new Sphere(glm::vec3(10, 10, -60.0), 3);
+    Sphere *sphere2 = new Sphere(glm::vec3(10, 10, -180.0), 3);
     sphere2->setColor(glm::vec3(0.2, 1, 1));   //Set colour to light blue
     sceneObjects.push_back(sphere2);         //Add sphere to scene objects
     sphere2->setSpecularity(false);
 
-    Sphere *sphere3 = new Sphere(glm::vec3(5.0, -10.0, -60.0), 5.0);
+    Sphere *sphere3 = new Sphere(glm::vec3(5.0, -10.0, -180.0), 5.0);
     sphere3->setColor(glm::vec3(0, 1, 0));   //Set colour to green
     sceneObjects.push_back(sphere3);         //Add sphere to scene objects
 
-    Sphere *sphere4 = new Sphere(glm::vec3(5.0, 5.0, -70.0), 4.0);
+    Sphere *sphere4 = new Sphere(glm::vec3(5.0, 5.0, -210.0), 4.0);
     sphere4->setColor(glm::vec3(1, 0, 0));   //Set colour to red
     sceneObjects.push_back(sphere4);         //Add sphere to scene objects
     sphere4->setReflectivity(true, 0.3);
