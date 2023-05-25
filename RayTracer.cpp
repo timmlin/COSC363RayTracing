@@ -27,6 +27,8 @@ const float XMIN = -10.0;
 const float XMAX = 10.0;
 const float YMIN = -10.0;
 const float YMAX = 10.0;
+
+
 TextureBMP texture;
 
 vector<SceneObject*> sceneObjects;
@@ -74,16 +76,19 @@ glm::vec3 trace(Ray ray, int step)
     if (ray.index == 3) //floor plane
     {
         //Stripe pattern
-        int stripeWidth = 5;
+        int stripeWidth = 9;
+        int stripeLength = 3;
+        int ix = (ray.hit.x + 100) / stripeLength;
         int iz = (ray.hit.z) / stripeWidth;
-        int k = iz % 2; //2 colors
-        if (k == 0) color = glm::vec3(0, 1, 0);
-        else color = glm::vec3(1, 1, 0.5);
+        int k = (iz + ix) % 2; //2 colors
+        if (k == 0) color = glm::vec3(0.4, 0.8, 0);
+        else color = glm::vec3(1, 1, 0.8);
         obj->setColor(color);
 
         //texture mapping
         float texcoords = (ray.hit.x - -10)/(10 - -10);
         float texcoordt = (ray.hit.y - -20) /(-100 - -20);
+
 
         if(texcoords > 0 && texcoords < 1 &&
         texcoordt > 0 && texcoordt < 1)

@@ -12,9 +12,10 @@
 #include <GL/freeglut.h>
 #include "TextureBMP.h"
 
-#define MIN_X_VALUE -20.0
-#define MAX_X_VALUE 20.0
-#define MIN_Z_VALUE -350
+#define MIN_X_VALUE  -30.0
+#define MAX_X_VALUE   30.0
+#define MIN_Z_VALUE  -200
+#define MAX_Z_VALUE  -40
 
 /**
  * @brief adds planes that make up the walls and floor of the room to the SceneObjects array
