@@ -41,7 +41,7 @@ vector<SceneObject*> sceneObjects;
 glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);                     //Background colour = (0,0,0)
-    glm::vec3 lightPos(0, 29, 30);                 //Light's position
+    glm::vec3 lightPos(0, 15, -30);                   //Light's position
     glm::vec3 color(0);
     SceneObject* obj;
 
@@ -81,8 +81,8 @@ glm::vec3 trace(Ray ray, int step)
         int ix = (ray.hit.x + 100) / stripeLength;
         int iz = (ray.hit.z) / stripeWidth;
         int k = (iz + ix) % 2; //2 colors
-        if (k == 0) color = glm::vec3(0.4, 0.8, 0);
-        else color = glm::vec3(1, 1, 0.8);
+        if (k == 0) color = glm::vec3(0.3, 0.3, 0.3);
+        else color = glm::vec3(0.7, 0.7, 0.7);
         obj->setColor(color);
 
         //texture mapping
@@ -160,22 +160,20 @@ void initialize()
 
     texture = TextureBMP("Butterfly.bmp");
 
-    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, 0.0, -270.0), 6.0);
+    Sphere *sphere1 = new Sphere(glm::vec3(-7.0, -8.0, -80.0), 6);
     sphere1->setColor(glm::vec3(0, 0, 1));   //Set colour to blue
     sceneObjects.push_back(sphere1);         //Add sphere to scene objects
     sphere1->setShininess(5);
     sphere1->setReflectivity(true, 0.5);
     sphere1->setTransparency(true);
 
-    Sphere *sphere3 = new Sphere(glm::vec3(5.0, -10.0, -180.0), 5.0);
-    sphere3->setColor(glm::vec3(0, 1, 0));   //Set colour to green
+    Sphere *sphere3 = new Sphere(glm::vec3(7.0, -8.0, -80.0), 6);
+    sphere3->setColor(glm::vec3(1, 0, 0));   //Set colour to red
     sceneObjects.push_back(sphere3);         //Add sphere to scene objects
 
-    Sphere *sphere4 = new Sphere(glm::vec3(5.0, 5.0, -210.0), 4.0);
-    sphere4->setColor(glm::vec3(1, 0, 0));   //Set colour to red
+    Sphere *sphere4 = new Sphere(glm::vec3(0.0, -8.0, -60.0), 4.5);
+    sphere4->setColor(glm::vec3(1, 1, 0));   //Set colour to yellow
     sceneObjects.push_back(sphere4);         //Add sphere to scene objects
-    sphere4->setReflectivity(true, 0.3);
-
 
     sceneObjects = intialiseRoom(sceneObjects);
 
