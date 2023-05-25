@@ -20,7 +20,7 @@
 
 using namespace std;
 
-const float EDIST = 40.0;
+const float EDIST = 30.0;
 const int NUMDIV = 500;
 const int MAX_STEPS = 50;
 const float XMIN = -10.0;
@@ -39,7 +39,7 @@ vector<SceneObject*> sceneObjects;
 glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);                     //Background colour = (0,0,0)
-    glm::vec3 lightPos(10, 40, -3);                 //Light's position
+    glm::vec3 lightPos(0, 29, 30);                 //Light's position
     glm::vec3 color(0);
     SceneObject* obj;
 
@@ -71,7 +71,7 @@ glm::vec3 trace(Ray ray, int step)
 
 
 
-    if (ray.index == 4) //floor plane
+    if (ray.index == 3) //floor plane
     {
         //Stripe pattern
         int stripeWidth = 5;
@@ -155,17 +155,12 @@ void initialize()
 
     texture = TextureBMP("Butterfly.bmp");
 
-    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, 0.0, -270.0), 15.0);
+    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, 0.0, -270.0), 6.0);
     sphere1->setColor(glm::vec3(0, 0, 1));   //Set colour to blue
     sceneObjects.push_back(sphere1);         //Add sphere to scene objects
     sphere1->setShininess(5);
     sphere1->setReflectivity(true, 0.5);
     sphere1->setTransparency(true);
-
-    Sphere *sphere2 = new Sphere(glm::vec3(10, 10, -180.0), 3);
-    sphere2->setColor(glm::vec3(0.2, 1, 1));   //Set colour to light blue
-    sceneObjects.push_back(sphere2);         //Add sphere to scene objects
-    sphere2->setSpecularity(false);
 
     Sphere *sphere3 = new Sphere(glm::vec3(5.0, -10.0, -180.0), 5.0);
     sphere3->setColor(glm::vec3(0, 1, 0));   //Set colour to green
