@@ -41,7 +41,7 @@ vector<SceneObject*> sceneObjects;
 glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);                     //Background colour = (0,0,0)
-    glm::vec3 lightPos(0, 15, -30);                   //Light's position
+    glm::vec3 lightPos(0, 2, 10);                   //Light's position
     glm::vec3 color(0);
     SceneObject* obj;
 
@@ -70,6 +70,14 @@ glm::vec3 trace(Ray ray, int step)
         glm::vec3 reflectedColor = trace(reflectedRay, step + 1);
         color = color + (rho * reflectedColor);
     }
+
+    if(ray.index == 2) // yellowball
+    {
+        Ray transperancyRay(ray.hit, ray.dir);
+        glm::vec3 transparentColour = trace(transperancyRay, 10);
+        color = color + (1.0f * transparentColour);
+    }
+
 
 
 
@@ -172,7 +180,8 @@ void initialize()
     sceneObjects.push_back(sphere3);         //Add sphere to scene objects
 
     Sphere *sphere4 = new Sphere(glm::vec3(0.0, -8.0, -60.0), 4.5);
-    sphere4->setColor(glm::vec3(1, 1, 0));   //Set colour to yellow
+    sphere4->setColor(glm::vec3(1,1,0));   //Set colour to yellow
+    sphere4->setTransparency(true);
     sceneObjects.push_back(sphere4);         //Add sphere to scene objects
 
     sceneObjects = intialiseRoom(sceneObjects);
