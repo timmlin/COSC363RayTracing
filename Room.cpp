@@ -27,8 +27,8 @@ vector<SceneObject*> intialiseRoom(vector<SceneObject*> sceneObjects)
                                 glm::vec3(MAX_X_VALUE, MAX_Y_VALUE, MAX_Z_VALUE),   // bottom right
                                 glm::vec3(MAX_X_VALUE, MAX_Y_VALUE, MIN_Z_VALUE),   // top right
                                 glm::vec3(MIN_X_VALUE, MAX_Y_VALUE, MIN_Z_VALUE));  // top left
-    ceiling->setColor(glm::vec3(1,0.3,0.5));
-    ceiling->setReflectivity(true);
+    ceiling->setColor(glm::vec3(1,1,1));
+    //ceiling->setReflectivity(true);
     sceneObjects.push_back(ceiling);
 
     //initialise the left wall plane and add to SceneObjects
@@ -66,13 +66,30 @@ vector<SceneObject*> intialiseRoom(vector<SceneObject*> sceneObjects)
 //    sceneObjects.push_back(frontWall);
 
     //initialise the mirror plane and add it to the SceneObjects
-    Plane *mirror = new Plane (glm::vec3(MAX_X_VALUE - 5, MAX_Y_VALUE-5, MIN_Z_VALUE+0.1),  //top right
+    Plane *backMirror = new Plane (glm::vec3(MAX_X_VALUE - 5, MAX_Y_VALUE-5, MIN_Z_VALUE+0.1),  //top right
                                  glm::vec3(MIN_X_VALUE + 5, MAX_Y_VALUE-5, MIN_Z_VALUE+0.1),  // top left
                                  glm::vec3(MIN_X_VALUE + 5, MIN_Y_VALUE+5, MIN_Z_VALUE+0.1),  // bottom left
                                  glm::vec3(MAX_X_VALUE - 5, MIN_Y_VALUE+5, MIN_Z_VALUE+0.1)); // bottom right
-    mirror->setColor(glm::vec3(0,0,0));
-    mirror->setReflectivity(true);
-    sceneObjects.push_back(mirror);
+    backMirror->setColor(glm::vec3(0,0,0));
+    backMirror->setReflectivity(true);
+    sceneObjects.push_back(backMirror);
+
+    Plane *leftMirror = new Plane (glm::vec3(MIN_X_VALUE+0.1, MAX_Y_VALUE-5, MAX_Z_VALUE-5),  //top right
+                                     glm::vec3(MIN_X_VALUE+0.1, MIN_Y_VALUE+5, MAX_Z_VALUE-5),  // top left
+                                     glm::vec3(MIN_X_VALUE+0.1, MIN_Y_VALUE+5, MIN_Z_VALUE+5),  // bottom left
+                                     glm::vec3(MIN_X_VALUE+0.1, MAX_Y_VALUE-5, MIN_Z_VALUE+5)); // bottom right
+    leftMirror->setColor(glm::vec3(0,0,0));
+    leftMirror->setReflectivity(true);
+    sceneObjects.push_back(leftMirror);
+
+    Plane *rightMirror = new Plane (glm::vec3(MAX_X_VALUE-0.1, MAX_Y_VALUE-5, MAX_Z_VALUE-5),  //top right
+                                     glm::vec3(MAX_X_VALUE-0.1, MAX_Y_VALUE-5, MIN_Z_VALUE+5),  // top left
+                                     glm::vec3(MAX_X_VALUE-0.1, MIN_Y_VALUE+5, MIN_Z_VALUE+5),  // bottom left
+                                     glm::vec3(MAX_X_VALUE-0.1, MIN_Y_VALUE+5, MAX_Z_VALUE-5)); // bottom right
+    rightMirror->setColor(glm::vec3(0,0,0));
+    rightMirror->setReflectivity(true);
+    sceneObjects.push_back(rightMirror);
+
 
 
     return sceneObjects;

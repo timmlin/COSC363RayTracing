@@ -28,8 +28,9 @@ const float XMAX = 10.0;
 const float YMIN = -10.0;
 const float YMAX = 10.0;
 
-
 TextureBMP texture;
+TextureBMP sphereTexture;
+
 
 vector<SceneObject*> sceneObjects;
 
@@ -42,6 +43,7 @@ glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);                     //Background colour = (0,0,0)
     glm::vec3 lightPos(0, 2, 10);                   //Light's position
+    glm::vec3 spotLight(0, -10,5);
     glm::vec3 color(0);
     SceneObject* obj;
 
@@ -53,6 +55,7 @@ glm::vec3 trace(Ray ray, int step)
     color = obj->lighting(lightPos, -ray.dir, ray.hit);
 
     glm::vec3 lightVec = lightPos - ray.hit;
+
     Ray shadowRay(ray.hit, lightVec);
     shadowRay.closestPt(sceneObjects);
 
@@ -71,11 +74,27 @@ glm::vec3 trace(Ray ray, int step)
         color = color + (rho * reflectedColor);
     }
 
-    if(ray.index == 2) // yellowball
+    if (ray.index == 1)
+    {
+        obj->setColor(color);
+        glm::vec3 normal = obj->normal(ray.hit);
+
+        float texcoordu = 0.5 + (std::atan2(normal.z, normal.x)/(2*M_PI));
+        float texcoordv = 0.5 + (std::asin(normal.y)/M_PI);
+
+        color=sphereTexture.getColorAt(texcoordu, texcoordv);
+        obj->setColor(color);
+
+    }
+
+
+
+
+    if(ray.index == 0) // yellowball
     {
         Ray transperancyRay(ray.hit, ray.dir);
-        glm::vec3 transparentColour = trace(transperancyRay, 10);
-        color = color + (1.0f * transparentColour);
+        glm::vec3 transperancyColour = trace(transperancyRay, 10);
+        color = color + (1.0f * transperancyColour);
     }
 
 
@@ -94,8 +113,8 @@ glm::vec3 trace(Ray ray, int step)
         obj->setColor(color);
 
         //texture mapping
-        float texcoords = (ray.hit.x - -10)/(10 - -10);
-        float texcoordt = (ray.hit.y - -20) /(-100 - -20);
+        float texcoords = (ray.hit.x - -15)/(5 - -15);
+        float texcoordt = (ray.hit.z - -60) /(-90 - -60);
 
 
         if(texcoords > 0 && texcoords < 1 &&
@@ -105,6 +124,11 @@ glm::vec3 trace(Ray ray, int step)
             obj->setColor(color);
         }
     }
+
+    //add fog to the scene
+    //float fog = (ray.hit.z - MAX_Z_VALUE+50)/(MIN_Z_VALUE+50 - MAX_Z_VALUE);
+    //color = (1 - fog) * color + (fog * glm::vec3(1,1,1));
+
 
     return color;
 }
@@ -167,21 +191,21 @@ void initialize()
 
 
     texture = TextureBMP("Butterfly.bmp");
+    sphereTexture = TextureBMP("wood.bmp");
 
     Sphere *sphere1 = new Sphere(glm::vec3(-7.0, -8.0, -80.0), 6);
     sphere1->setColor(glm::vec3(0, 0, 1));   //Set colour to blue
+    sphere1->setTransparency(true, 0.1);
+    sphere1->setRefractivity(true);
     sceneObjects.push_back(sphere1);         //Add sphere to scene objects
-    sphere1->setShininess(5);
-    sphere1->setReflectivity(true, 0.5);
-    sphere1->setTransparency(true);
+
 
     Sphere *sphere3 = new Sphere(glm::vec3(7.0, -8.0, -80.0), 6);
-    sphere3->setColor(glm::vec3(1, 0, 0));   //Set colour to red
+    sphere3->setColor(glm::vec3(0, 0, 0));   //Set colour to red
     sceneObjects.push_back(sphere3);         //Add sphere to scene objects
 
     Sphere *sphere4 = new Sphere(glm::vec3(0.0, -8.0, -60.0), 4.5);
     sphere4->setColor(glm::vec3(1,1,0));   //Set colour to yellow
-    sphere4->setTransparency(true);
     sceneObjects.push_back(sphere4);         //Add sphere to scene objects
 
     sceneObjects = intialiseRoom(sceneObjects);
