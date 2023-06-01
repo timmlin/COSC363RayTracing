@@ -126,8 +126,8 @@ glm::vec3 trace(Ray ray, int step)
     }
 
     //add fog to the scene
-    //float fog = (ray.hit.z - MAX_Z_VALUE+50)/(MIN_Z_VALUE+50 - MAX_Z_VALUE);
-    //color = (1 - fog) * color + (fog * glm::vec3(1,1,1));
+    float fog = (ray.hit.z - MAX_Z_VALUE+20)/(MIN_Z_VALUE-20 - MAX_Z_VALUE-20);
+    color = (1 - fog) * color + (fog * glm::vec3(1,1,1));
 
 
     return color;
@@ -196,12 +196,11 @@ void initialize()
     Sphere *sphere1 = new Sphere(glm::vec3(-7.0, -8.0, -80.0), 6);
     sphere1->setColor(glm::vec3(0, 0, 1));   //Set colour to blue
     sphere1->setTransparency(true, 0.1);
-    sphere1->setRefractivity(true);
     sceneObjects.push_back(sphere1);         //Add sphere to scene objects
 
 
     Sphere *sphere3 = new Sphere(glm::vec3(7.0, -8.0, -80.0), 6);
-    sphere3->setColor(glm::vec3(0, 0, 0));   //Set colour to red
+    sphere3->setColor(glm::vec3(0, 0, 0));
     sceneObjects.push_back(sphere3);         //Add sphere to scene objects
 
     Sphere *sphere4 = new Sphere(glm::vec3(0.0, -8.0, -60.0), 4.5);
