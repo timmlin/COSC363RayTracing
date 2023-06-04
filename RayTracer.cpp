@@ -17,6 +17,7 @@
 #include <GL/freeglut.h>
 #include "Room.h"
 #include "TextureBMP.h"
+#include "cylinder.h"
 
 using namespace std;
 
@@ -100,7 +101,7 @@ glm::vec3 trace(Ray ray, int step)
 
 
 
-    if (ray.index == 3) //floor plane
+    if (ray.index == 6) //floor plane
     {
         //Stripe pattern
         int stripeWidth = 9;
@@ -193,24 +194,33 @@ void initialize()
     texture = TextureBMP("Butterfly.bmp");
     sphereTexture = TextureBMP("wood.bmp");
 
-    Sphere *sphere1 = new Sphere(glm::vec3(-7.0, -8.0, -80.0), 6);
+    Sphere *sphere1 = new Sphere(glm::vec3(-7.0, 0.0, -40.0), 3);
     sphere1->setColor(glm::vec3(0, 0, 1));   //Set colour to blue
     sphere1->setTransparency(true, 0.1);
     sceneObjects.push_back(sphere1);         //Add sphere to scene objects
 
 
-    Sphere *sphere3 = new Sphere(glm::vec3(7.0, -8.0, -80.0), 6);
+    Sphere *sphere3 = new Sphere(glm::vec3(7.0, 0.0, -40.0), 3);
     sphere3->setColor(glm::vec3(0, 0, 0));
     sceneObjects.push_back(sphere3);         //Add sphere to scene objects
 
-    Sphere *sphere4 = new Sphere(glm::vec3(0.0, -8.0, -60.0), 4.5);
+    Sphere *sphere4 = new Sphere(glm::vec3(0.0, 0.0, -30.0), 3);
     sphere4->setColor(glm::vec3(1,1,0));   //Set colour to yellow
     sceneObjects.push_back(sphere4);         //Add sphere to scene objects
 
+    Cylinder *cylinder0 = new Cylinder(glm::vec3(7.0, -8.0, -40.0), 1, 6);
+    cylinder0->setColor(glm::vec3(0.5,0.5,1));
+    sceneObjects.push_back(cylinder0);
+
+    Cylinder *cylinder1 = new Cylinder(glm::vec3(0.0, -8.0, -30.0), 1, 6);
+    cylinder1->setColor(glm::vec3(0.5,1,0.5));
+    sceneObjects.push_back(cylinder1);
+
+    Cylinder *cylinder2 = new Cylinder(glm::vec3(-7.0, -8.0, -40.0), 1, 5.1);
+    cylinder2->setColor(glm::vec3(1,0.5,0.5));
+    sceneObjects.push_back(cylinder2);
+
     sceneObjects = intialiseRoom(sceneObjects);
-
-
-
 
 }
 
