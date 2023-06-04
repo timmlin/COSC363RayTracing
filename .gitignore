@@ -1,0 +1,4 @@
+#ignores assignment report files
+.png
+.user
+.odt
